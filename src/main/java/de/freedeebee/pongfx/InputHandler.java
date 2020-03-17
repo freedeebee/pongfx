@@ -12,6 +12,9 @@ public class InputHandler {
     private boolean rightMovingUp;
     private boolean rightMovingDown;
 
+    private int directionY = -1;
+    private int directionX = -1;
+
     public InputHandler(Scene scene, Screen screen) {
         this.scene = scene;
         this.screen = screen;
@@ -79,19 +82,22 @@ public class InputHandler {
 
         int speed = 10;
 
-        int directionY = -1;
-
         // TODO: Ball Movement
         if (ball.getPosY() <= 0) {
             directionY = 1;
         } else if (ball.getPosY() + Constants.BALL_SIZE > Constants.SCREEN_HEIGHT) {
             directionY = -1;
-        } else {
+        }
 
+        if (ball.getPosX() <= 0) {
+            directionX = 1;
+        } else if (ball.getPosX() + Constants.BALL_SIZE > Constants.SCREEN_WIDTH) {
+            directionX = -1;
         }
 
 
         ball.setPosY(ball.getPosY() + directionY * speed);
+        ball.setPosX(ball.getPosX() + directionX * speed);
 
 
     }
