@@ -1,11 +1,15 @@
 package de.freedeebee.pongfx;
 
+import de.freedeebee.pongfx.gameobjects.Ball;
+import de.freedeebee.pongfx.gameobjects.Handle;
+import de.freedeebee.pongfx.utils.Constants;
+import javafx.application.Platform;
 import javafx.scene.Scene;
 
 public class InputHandler {
 
     private Scene scene;
-    private Screen screen;
+    private Game game;
 
     private boolean leftMovingUp;
     private boolean leftMovingDown;
@@ -15,9 +19,9 @@ public class InputHandler {
     private int directionY = -1;
     private int directionX = -1;
 
-    public InputHandler(Scene scene, Screen screen) {
+    public InputHandler(Scene scene, Game game) {
         this.scene = scene;
-        this.screen = screen;
+        this.game = game;
         init();
     }
 
@@ -36,6 +40,9 @@ public class InputHandler {
                 case DOWN:
                     rightMovingDown = true;
                     break;
+                case ESCAPE:
+                    Platform.exit();
+                    System.exit(0);
             }
         });
 
@@ -59,8 +66,8 @@ public class InputHandler {
 
     public void move() {
 
-        Handle leftHandle = this.screen.getHandleLeft();
-        Handle rightHandle = this.screen.getHandleRight();
+        Handle leftHandle = this.game.getHandleLeft();
+        Handle rightHandle = this.game.getHandleRight();
 
         if (leftMovingUp && leftHandle.getPosY() >= 0) {
             leftHandle.setPosY(leftHandle.getPosY() - 10);
@@ -78,11 +85,11 @@ public class InputHandler {
 
     public void moveBall() {
 
-        Ball ball = this.screen.getBall();
-        Handle leftHandle = this.screen.getHandleLeft();
-        Handle rightHandle = this.screen.getHandleRight();
+        GameState gameState = GameState.getInstance();
 
-        int speed = 2;
+        Ball ball = this.game.getBall();
+        Handle leftHandle = this.game.getHandleLeft();
+        Handle rightHandle = this.game.getHandleRight();
 
         if (ball.getPosY() <= 0) {
             directionY = 1;
@@ -92,10 +99,10 @@ public class InputHandler {
 
         if (ball.getPosX() <= 0) {
             // Win Right
-            directionX = 1;
+            gameState.setGameOver(true);
         } else if (ball.getPosX() + Constants.BALL_SIZE > Constants.SCREEN_WIDTH) {
             // Win left
-            directionX = -1;
+            gameState.setGameOver(true);
         }
 
         if (ball.getPosX() < leftHandle.getPosX() + Constants.HANDLE_WIDTH && ball.getPosY() > leftHandle.getPosY() && ball.getPosY() + Constants.BALL_SIZE < leftHandle.getPosY() + Constants.HANDLE_HEIGHT) {
@@ -105,8 +112,8 @@ public class InputHandler {
         }
 
 
-        ball.setPosY(ball.getPosY() + directionY * speed);
-        ball.setPosX(ball.getPosX() + directionX * speed);
+        ball.setPosY(ball.getPosY() + directionY * Constants.BALL_SPEED);
+        ball.setPosX(ball.getPosX() + directionX * Constants.BALL_SPEED);
 
 
     }

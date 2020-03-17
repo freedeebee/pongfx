@@ -1,32 +1,25 @@
 package de.freedeebee.pongfx;
 
+import de.freedeebee.pongfx.gameobjects.Ball;
+import de.freedeebee.pongfx.gameobjects.Handle;
+import de.freedeebee.pongfx.utils.Constants;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
-public class Screen {
+public class Game {
 
-    private final Canvas canvas;
     private final GraphicsContext ctx;
 
     private Handle handleLeft;
     private Handle handleRight;
     private Ball ball;
 
-    public Screen(int width, int height) {
-        this.canvas = new Canvas(width, height);
+    public Game(Canvas canvas) {
         this.ctx = canvas.getGraphicsContext2D();
         this.handleLeft = new Handle();
         this.handleRight = new Handle(true);
         this.ball = new Ball();
-    }
-
-    public Canvas getCanvas() {
-        return canvas;
-    }
-
-    public GraphicsContext getCtx() {
-        return ctx;
     }
 
     public void render() {

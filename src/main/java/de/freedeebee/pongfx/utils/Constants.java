@@ -1,4 +1,4 @@
-package de.freedeebee.pongfx;
+package de.freedeebee.pongfx.utils;
 
 public class Constants {
 
@@ -7,5 +7,6 @@ public class Constants {
     public static final int HANDLE_WIDTH = 20;
     public static final int HANDLE_HEIGHT = 70;
     public static final int BALL_SIZE = 20;
+    public static final int BALL_SPEED = 5;
 
 }

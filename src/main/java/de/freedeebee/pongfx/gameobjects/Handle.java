@@ -1,4 +1,6 @@
-package de.freedeebee.pongfx;
+package de.freedeebee.pongfx.gameobjects;
+
+import de.freedeebee.pongfx.utils.Constants;
 
 public class Handle {
 
