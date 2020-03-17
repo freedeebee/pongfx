@@ -79,10 +79,11 @@ public class InputHandler {
     public void moveBall() {
 
         Ball ball = this.screen.getBall();
+        Handle leftHandle = this.screen.getHandleLeft();
+        Handle rightHandle = this.screen.getHandleRight();
 
-        int speed = 10;
+        int speed = 2;
 
-        // TODO: Ball Movement
         if (ball.getPosY() <= 0) {
             directionY = 1;
         } else if (ball.getPosY() + Constants.BALL_SIZE > Constants.SCREEN_HEIGHT) {
@@ -90,8 +91,16 @@ public class InputHandler {
         }
 
         if (ball.getPosX() <= 0) {
+            // Win Right
             directionX = 1;
         } else if (ball.getPosX() + Constants.BALL_SIZE > Constants.SCREEN_WIDTH) {
+            // Win left
+            directionX = -1;
+        }
+
+        if (ball.getPosX() < leftHandle.getPosX() + Constants.HANDLE_WIDTH && ball.getPosY() > leftHandle.getPosY() && ball.getPosY() + Constants.BALL_SIZE < leftHandle.getPosY() + Constants.HANDLE_HEIGHT) {
+            directionX = 1;
+        } else if (ball.getPosX() + Constants.BALL_SIZE > rightHandle.getPosX() && ball.getPosY() + Constants.BALL_SIZE > rightHandle.getPosY() && ball.getPosY() < rightHandle.getPosY() + Constants.HANDLE_HEIGHT ) {
             directionX = -1;
         }
 
